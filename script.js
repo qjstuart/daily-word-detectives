@@ -1,4 +1,6 @@
 const infoBar = document.querySelector(".info-bar");
+const letterSlots = document.querySelectorAll(".letter-input");
+
 
 const MAX_WORD_LENGTH = 5;
 const MAX_TRIES = 5;
@@ -26,13 +28,23 @@ const init = async () => {
     const input = event.key;
 
     if (isLetter(input)) {
-      // TODO handleLetter(input);
+      handleLetter(input);
     } else if (input === "Enter") {
       // TODO submit();
     } else if (input === "Backspace") {
       // TODO handleBackspace();
     }
   });
+
+  const handleLetter = (letter) => {
+    if (currentGuess.length < MAX_WORD_LENGTH) {
+      letter = letter.toUpperCase();
+      currentGuess += letter;
+      letterSlots[
+        MAX_WORD_LENGTH * currentRow + currentGuess.length - 1
+      ].innerText = letter;
+    }
+  };
 };
 
 const fetchWordOfTheDay = async () => {
