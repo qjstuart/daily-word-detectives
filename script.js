@@ -32,7 +32,7 @@ const init = async () => {
     } else if (input === "Enter") {
       // TODO submit();
     } else if (input === "Backspace") {
-      // TODO handleBackspace();
+      handleBackspace();
     }
   });
 
@@ -45,6 +45,11 @@ const init = async () => {
       ].innerText = letter;
     }
   };
+
+  const handleBackspace = () => {
+    currentGuess = currentGuess.substring(0, currentGuess.length - 1);
+    letterSlots[MAX_WORD_LENGTH * currentRow + currentGuess.length].innerText = "";
+}
 };
 
 const fetchWordOfTheDay = async () => {
