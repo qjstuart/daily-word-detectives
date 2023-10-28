@@ -1,7 +1,6 @@
 const infoBar = document.querySelector(".info-bar");
 const letterSlots = document.querySelectorAll(".letter-input");
 
-
 const MAX_WORD_LENGTH = 5;
 const MAX_TRIES = 5;
 
@@ -30,7 +29,7 @@ const init = async () => {
     if (isLetter(input)) {
       handleLetter(input);
     } else if (input === "Enter") {
-      // TODO submit();
+      submit();
     } else if (input === "Backspace") {
       handleBackspace();
     }
@@ -48,8 +47,52 @@ const init = async () => {
 
   const handleBackspace = () => {
     currentGuess = currentGuess.substring(0, currentGuess.length - 1);
-    letterSlots[MAX_WORD_LENGTH * currentRow + currentGuess.length].innerText = "";
-}
+    letterSlots[MAX_WORD_LENGTH * currentRow + currentGuess.length].innerText =
+      "";
+  };
+
+  const submit = async () => {
+    // If current guess is not of appropriate length, do nothing
+    if (currentGuess.length !== MAX_WORD_LENGTH) {
+      return;
+    }
+
+    if (currentGuess === wordOfTheDay) {
+      alert("You win!");
+      gameOver = true;
+      return;
+    }
+
+    isLoading = true;
+    setLoading(isLoading);
+    const validWord = await validateWord(currentGuess);
+    isLoading = false;
+    setLoading(isLoading);
+    console.log("VALID? ", validWord);
+
+    // If invalid word, color in red and do nothing
+    if (!validWord) {
+      // TODO colorInvalidWord(currentRow);
+      return;
+    }
+  };
+};
+
+const validateWord = async (word) => {
+  try {
+    const res = await fetch("https://words.dev-apis.com/validate-word", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: word }),
+    });
+    if (!res.ok) {
+      throw new Error("Network response was not OK");
+    }
+    const { validWord } = await res.json();
+    return validWord;
+  } catch (error) {
+    console.error("Fetch error: ", error);
+  }
 };
 
 const fetchWordOfTheDay = async () => {
