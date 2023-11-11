@@ -88,6 +88,22 @@ img.detective {
   height: 45px;
 }
 
+.invalid {
+  animation: flash 1s;
+}
+
+.correct {
+  background-color: green;
+}
+
+.non-exact-match {
+  background-color: yellow;
+}
+
+.no-match {
+  background-color: grey;
+}
+
 .RightToLeft {
   animation: RightToLeft 10s infinite linear;
 }
@@ -98,5 +114,15 @@ img.detective {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes flash {
+  5% {
+    border-color: rgb(255, 0, 0);
+  }
+
+  100% {
+    border-color: rgb(184, 183, 183);
   }
 }

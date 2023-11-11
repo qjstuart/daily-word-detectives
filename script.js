@@ -77,7 +77,35 @@ const init = async () => {
     }
     const guessedLetters = currentGuess.split("");
     const map = makeMap(lettersOfTheDay);
-    console.log(map);
+    for (let i = 0; i < MAX_WORD_LENGTH; i++) {
+      // Mark correct
+      if (guessedLetters[i] === lettersOfTheDay[i]) {
+        letterSlots[MAX_WORD_LENGTH * currentRow + i].classList.add("correct");
+        map[guessedLetters[i]]--;
+      }
+    }
+    for (let i = 0; i < MAX_WORD_LENGTH; i++) {
+      if (guessedLetters[i] === lettersOfTheDay[i]) {
+        // Do nothing
+      } else if (map[guessedLetters[i]] && map[guessedLetters[i]] > 0) {
+        allRight = false;
+        letterSlots[MAX_WORD_LENGTH * currentRow + i].classList.add(
+          "non-exact-match"
+        );
+        map[guessedLetters[i]]--;
+      } else {
+        allRight = false;
+        letterSlots[MAX_WORD_LENGTH * currentRow + i].classList.add("no-match");
+      }
+    }
+
+    if (currentRow === MAX_TRIES) {
+      alert(`You lose! The word was ${wordOfTheDay}!`);
+      gameOver = true;
+    }
+    console.log("currentRow", currentRow);
+    currentGuess = "";
+    currentRow++;
   };
 };
 
