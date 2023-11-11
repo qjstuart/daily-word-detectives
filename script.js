@@ -72,11 +72,27 @@ const init = async () => {
 
     // If invalid word, color in red and do nothing
     if (!validWord) {
-      // TODO colorInvalidWord(currentRow);
+      colorInvalidWord(currentRow);
       return;
     }
+    const guessedLetters = currentGuess.split("");
+    const map = makeMap(lettersOfTheDay);
+    console.log(map);
   };
 };
+
+function makeMap(array) {
+  const obj = {};
+  for (let i = 0; i < array.length; i++) {
+    const letter = array[i];
+    if (obj[letter]) {
+      obj[letter]++;
+    } else {
+      obj[letter] = 1;
+    }
+  }
+  return obj;
+}
 
 const validateWord = async (word) => {
   try {
@@ -92,6 +108,17 @@ const validateWord = async (word) => {
     return validWord;
   } catch (error) {
     console.error("Fetch error: ", error);
+  }
+};
+
+const colorInvalidWord = (currentRow) => {
+  const startPosition = MAX_WORD_LENGTH * currentRow;
+  for (let i = startPosition; i < startPosition + 5; i++) {
+    // Remove invalid class in case it is applied
+    letterSlots[i].classList.remove("invalid");
+    setTimeout(() => {
+      letterSlots[i].classList.add("invalid");
+    }, 10);
   }
 };
 
