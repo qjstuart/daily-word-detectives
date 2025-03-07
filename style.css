@@ -7,6 +7,11 @@ body {
   margin-inline: auto;
 }
 
+p {
+  line-height: 1.2;
+  margin-block: 0;
+}
+
 header {
   position: relative;
   top: 15px;
@@ -37,7 +42,8 @@ header .styled-text {
 }
 
 .hidden {
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none !important;
 }
 
 img.detective {
@@ -56,6 +62,47 @@ img.detective {
   font-family: cursive;
   font-size: 16px;
   font-weight: bold;
+}
+
+.how-to-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding-block: 1rem;
+  padding-inline: 0.5rem;
+  text-align: justify;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.square {
+  width: 16px;
+  height: 16px;
+}
+
+.green {
+  background-color: green;
+}
+
+.outline-red {
+  border: 2px solid red; /* Red outline */
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.legend-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-block: 0.5rem;
 }
 
 .flex-container {
